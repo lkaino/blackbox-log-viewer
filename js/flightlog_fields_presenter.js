@@ -187,6 +187,13 @@ function FlightLogFieldPresenter() {
                             'debug[2]':'Stack Current',
                             'debug[3]':'Stack p',
             },
+			'TRI' : 	{
+                            'debug[all]':'Tricopter',
+                            'debug[0]':'Motor correction',
+                            'debug[1]':'Tail motor feedback',
+                            'debug[2]':'Estimated yaw error',
+                            'debug[3]':'Servo output angle',
+            },
      };
     
     function presentFlags(flags, flagNames) {
@@ -352,7 +359,10 @@ function FlightLogFieldPresenter() {
             case 'debug[2]':
             case 'debug[3]':
             	return FlightLogFieldPresenter.decodeDebugFieldToFriendly(flightLog, fieldName, value, currentFlightMode);
-
+			
+			case 'servo[5]':
+				return (value/10).toFixed(1) + " deg";
+				
             default:
                 return "";
         }
@@ -413,6 +423,19 @@ function FlightLogFieldPresenter() {
                         return value.toFixed(0) + "\u03BCS";
                 case 'STACK':
                     return value.toFixed(0);
+				case 'TRI':
+                    switch (fieldName) {
+                        case 'debug[0]':
+                            return value.toFixed(0);
+                        case 'debug[1]':
+                            return value.toFixed(0);
+						case 'debug[2]':
+                            return value.toFixed(0);
+						case 'debug[3]':
+                            return (value/10).toFixed(1) + " deg";
+                        default:
+                            return value.toFixed(0) + "\u03BCS";
+                    }
                 default:
 					return "";
 			}	

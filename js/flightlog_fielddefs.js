@@ -171,7 +171,8 @@ var
             "ANGLERATE",
             "ESC_SENSOR",
             "SCHEDULER",
-            "STACK"
+            "STACK",
+			"TRI"
     ]),
 
     SUPER_EXPO_YAW = makeReadOnly([

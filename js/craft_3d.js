@@ -295,9 +295,12 @@ function Craft3D(flightLog, canvas, propColors) {
             prop.scale.set(0.95, 0.95, 0.95);
             
             // Tricopter tail servo
-            /*if (i == 0 && numMotors == 3 && frameFieldIndexes["servo[5]"] !== undefined) {
-                propShells[i].rotation.x = -(frame[frameFieldIndexes["servo[5]"]] - 1500) / 1000 * Math.PI;
-            }*/
+            if (i == 0 && numMotors == 3 && frameFieldIndexes["servo[5]"] !== undefined) {
+				var degree = frame[frameFieldIndexes["servo[5]"]] / 10.0;
+				
+                propShells[i].rotation.x = ((degree + 90) * Math.PI)/180
+				//-(frame[frameFieldIndexes["servo[5]"]] - 1500) / 1000 * Math.PI;
+            }
             
             propShells[i].add(prop);
             

@@ -240,9 +240,9 @@ GraphConfig.load = function(config) {
                 };
             } else if (fieldName.match(/^servo\[/)) {
                 return {
-                    offset: -1500,
-                    power: 1.0,
-                    inputRange: 500,
+                    offset: -900,
+                    power: 0.25,
+                    inputRange: 600 / 2,
                     outputRange: 1.0
                 };
             } else if (fieldName.match(/^gyroADC\[/)) {
@@ -415,6 +415,46 @@ GraphConfig.load = function(config) {
                             inputRange: flightLog.gyroRawToDegreesPerSecond((2.0e-3 * Math.PI/180) / sysConfig.gyroScale),
                             outputRange: 1.0
                         };
+					
+					case 'TRI':
+                        switch (fieldName) {
+                            case 'debug[0]': //motor correction
+                                return {
+                                    offset: -(sysConfig.motorOutput[1] + sysConfig.motorOutput[0]) / 2,
+									power: 1.0,
+									inputRange: (sysConfig.motorOutput[1] - sysConfig.motorOutput[0]) / 2,
+									outputRange: 1.0
+                                };
+                            case 'debug[1]': //tail motor
+                                return {
+                                    offset: -(sysConfig.motorOutput[1] + sysConfig.motorOutput[0]) / 2,
+									power: 1.0,
+									inputRange: (sysConfig.motorOutput[1] - sysConfig.motorOutput[0]) / 2,
+									outputRange: 1.0
+                                };
+                            case 'debug[2]': //yaw error
+                                return {
+                                    offset: -1000,
+                                    power: 1,
+                                    inputRange: 50,
+                                    outputRange: 1.0
+                                };
+							case 'debug[3]': //output angle
+                                return {
+									offset: -900,
+									power: 0.5,
+									inputRange: 600,
+									outputRange: 1.0
+                                };								
+                            default:
+                                return {
+                                    offset: -1000,    // zero offset
+                                    power: 1.0,
+                                    inputRange: 1000, //  0-2000uS
+                                    outputRange: 1.0
+                                };
+                        }
+						
                 }
             }
             // if not found above then

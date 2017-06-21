@@ -298,7 +298,7 @@ function Craft3D(flightLog, canvas, propColors) {
             if (i == 0 && numMotors == 3 && frameFieldIndexes["servo[5]"] !== undefined) {
 				var degree = frame[frameFieldIndexes["servo[5]"]] / 10.0;
 				
-                propShells[i].rotation.x = ((degree + 90) * Math.PI)/180
+                propShells[i].rotation.x = -((degree - 90) * 1.5) * (Math.PI/180);
 				//-(frame[frameFieldIndexes["servo[5]"]] - 1500) / 1000 * Math.PI;
             }
             
@@ -308,7 +308,7 @@ function Craft3D(flightLog, canvas, propColors) {
         }
         
         // Display the craft's attitude
-        craftParent.rotation.x = -frame[frameFieldIndexes['heading[1]']] /*- Math.PI / 2*/; // pitch
+        craftParent.rotation.x = -(frame[frameFieldIndexes['heading[1]']] + 45) /*- Math.PI / 2*/; // pitch
         craftParent.rotation.y = frame[frameFieldIndexes['heading[0]']]; // roll
         
         //craftParent.rotation.z = -frame[frameFieldIndexes['heading[2]']]; // yaw
